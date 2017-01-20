@@ -5,48 +5,43 @@ class ReservationList extends React.Component {
 		const DEFAULT_NUMBER_ROOMS = 2;
 
 		this.state = {
-			currentDate:{
-				date: new Date(),
-				reservations: []
-			},
-			days:[{
-				date: new Date(),
-				reservations: []
-			}]
+			currentDate: new Date(),
+			reservations:[/*{
+				startTime: new Date()
+				endTime: new Date()
+			}*/]
 		};
 	}
 
 	changeDate(forward){
 		let oneDayOffset = 1000 * 3600 * 24; // Remember, JS doesn't account for leap seconds
 		if (!forward){
-			oneDayOffset = -oneDayOffset;
+			oneDayOffset = -oneDayOffset; // Inverts the direction
 		}
 
 		let newState = {
-			currentDate:{
-				date: new Date(Date.now() + oneDayOffset),
-				reservations: []
-			},
-			days:this.state.days
+			currentDate: new Date(Date.now() + oneDayOffset),
+			reservations: this.state.reservations
 		};
-
-		// Copy old rooms
-		for (var i = 0; i < this.state.roomData.length; i++) {
-			newState.roomData.push(this.state.roomData[i]);
-		}
 
 		this.setState(newState);
 	}
 
-	removeRoom(index){
-		if (index > this.state.roomData.length) { throw new Error('Trying to remove a room that does not exist!'); }
-
+	addReservation(start, end){
+		// Find closest (maybe change to use binary search?)
 		let newState = {
-			numberRooms: this.state.numberRooms - 1,
-			roomData: this.state.roomData.splice(index, 1);
-		};
+			currentDate: this.state.currentDate,
+			reservations: this.state.reservations
+		}
 
-		this.setState(newState);
+		for (var i = 0; i < newstate.reservations.length; i++) {
+			if (newstate.reservations[i].startTime > end){ // TODO: double-check and triple-test this logic
+				// Assume all reservations are stored in order.
+				// if the reservation starts after the one we are adding begins, then the previous one might clash.
+			}
+		}
+
+		// Check overlap
 	}
 
 	render() {
