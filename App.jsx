@@ -10,15 +10,15 @@ class App extends React.Component {
 	addRoom(name){
 		let newState = {
 			numberRooms: this.state.numberRooms + 1,
-			roomData: []
+			roomOrder: []
 		};
 
 		// Copy old rooms
-		for (var i = 0; i < this.state.roomData.length; i++) {
-			newState.roomData.push(this.state.roomData[i]);
+		for (var i = 0; i < this.state.roomOrder.length; i++) {
+			newState.roomOrder.push(this.state.roomOrder[i]);
 		}
 
-		newState.roomData.push({
+		newState.roomOrder.push({
 			roomName: name,
 			roomTimes: new ReservationList()
 		});
@@ -27,21 +27,24 @@ class App extends React.Component {
 	}
 
 	removeRoom(index){
-		if (index > this.state.roomData.length) { throw new Error('Trying to remove a room that does not exist!'); }
+		if (index >= this.state.roomOrder.length) { throw new Error('Trying to remove a room that does not exist!'); }
 
 		let newState = {
 			numberRooms: this.state.numberRooms - 1,
-			roomData: this.state.roomData.splice(index, 1);
+			roomOrder: this.state.roomOrder.splice(index, 1)
 		};
 
 		this.setState(newState);
 	}
 
 	render() {
+		let rooms = this.state.roomOrder.map(function(line, index){
+			return(<ReservationList name={line.name}>);
+		});
+
 		return (
 			<div>
-				<ReservationList name="Test 1" />
-				<ReservationList name="Test 2" />
+				{rooms}
 			</div>
 		);
 	}
