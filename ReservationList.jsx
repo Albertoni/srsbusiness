@@ -48,7 +48,7 @@ class ReservationList extends React.Component {
 	render() {
 		return (
 			<div>
-				TODO!!!
+				{this.state.name}
 			</div>
 		);
 	}
