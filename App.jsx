@@ -7,7 +7,7 @@ class App extends React.Component {
 		super(props);
 
 		this.state = {
-			numberRooms: this.state.numberRooms + 1,
+			numberRooms: 0,
 			roomOrder: [],
 			newRoomName: ""
 		}
@@ -18,17 +18,17 @@ class App extends React.Component {
 
 	nameChange(event){
 		let newState = Object.assign({}, this.state); // Not the cleanest way, but there's no need for a deep copy
-		newstate.newRoomName = event.target.value;
+		newState.newRoomName = event.target.value;
 		this.setState(newState);
 	}
 
 	addRoom(event){
+		event.preventDefault();
 		let newState = Object.assign({}, this.state);
 		newState.numberRooms = newState.numberRooms + 1;
 
 		newState.roomOrder.push({
-			roomName: name,
-			roomTimes: new ReservationList()
+			roomName: this.state.newRoomName
 		});
 
 		this.setState(newState);
@@ -47,17 +47,18 @@ class App extends React.Component {
 
 	render() {
 		let rooms = this.state.roomOrder.map(function(line, index){
-			return(<ReservationList name={line.name} key={index} />);
+			console.log(line);
+			return(<ReservationList name={line.roomName} key={index} />);
 		});
 
 		return (
 			<div>
 				{rooms}
-				<form onsubmit={this.addRoom}>
+				<form onSubmit={this.addRoom}>
 					<h2>Create new room</h2>
 					<label>
 						Room name:
-						<input type="text" name="name" onchange={this.nameChange} />
+						<input type="text" name="name" onChange={this.nameChange} />
 					</label>
 					<input type="submit" value="Create" />
 				</form>
