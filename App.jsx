@@ -1,31 +1,47 @@
 import React from 'react';
-import Timetable from './Timetable.jsx';
+import ReservationList from './ReservationList.jsx';
 
 class App extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.state = { count: 5 };
-
-		this.add = this.add.bind(this);
-		this.subtract = this.subtract.bind(this);
 	}
 
-	add() {
-		this.setState({ count: this.state.count + 1 });
+	addRoom(name){
+		let newState = {
+			numberRooms: this.state.numberRooms + 1,
+			roomData: []
+		};
+
+		// Copy old rooms
+		for (var i = 0; i < this.state.roomData.length; i++) {
+			newState.roomData.push(this.state.roomData[i]);
+		}
+
+		newState.roomData.push({
+			roomName: name,
+			roomTimes: new ReservationList()
+		});
+
+		this.setState(newState);
 	}
 
-	subtract() {
-		this.setState({ count: this.state.count - 1 });
+	removeRoom(index){
+		if (index > this.state.roomData.length) { throw new Error('Trying to remove a room that does not exist!'); }
+
+		let newState = {
+			numberRooms: this.state.numberRooms - 1,
+			roomData: this.state.roomData.splice(index, 1);
+		};
+
+		this.setState(newState);
 	}
 
 	render() {
 		return (
 			<div>
-				count {this.state.count}
-				<br />
-				<button onClick={this.add} />
-				<button onClick={this.subtract} />
+				<ReservationList name="Test 1" />
+				<ReservationList name="Test 2" />
 			</div>
 		);
 	}

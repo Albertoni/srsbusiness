@@ -5,6 +5,7 @@ class ReservationList extends React.Component {
 		const DEFAULT_NUMBER_ROOMS = 2;
 
 		this.state = {
+			name: props.name,
 			currentDate: new Date(),
 			reservations:[/*{
 				startTime: new Date()
