@@ -48,10 +48,20 @@ class ReservationList extends React.Component {
 		// Check overlap
 	}
 
+	printDate(){
+		// Not sure if it's a good idea to make this into a full function,
+		// but I don't feel comfortable leaving the call with a hard-coded string inside the render function either.
+		let locale = 'en-CA';
+
+		return this.state.currentDate.toLocaleDateString(locale);
+	}
+
 	render() {
 		return (
 			<div>
-				{this.state.name}
+				<h2>{this.state.name} - {this.printDate()}</h2>
+				<hr />
+				{this.generateTable()}
 			</div>
 		);
 	}

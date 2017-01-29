@@ -53,7 +53,7 @@ class App extends React.Component {
 
 		return (
 			<div>
-				{rooms}
+				<div class="listContainer">{rooms}</div>
 				<form onSubmit={this.addRoom}>
 					<h2>Create new room</h2>
 					<label>
